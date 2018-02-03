@@ -1,0 +1,35 @@
+PTC examples
+============
+
+The PTC examples are composed of binary configurations and demo applications.
+The binary configurations have to be copied from the 'cfg' folder to the
+'/lib/firmware/' folder of your target. The PTC firmware is also provided and
+has to be copied in '/lib/firmware' as well.
+
+Before running the application, you have to probe the atmel_ptc module with
+the appropriate configuration.
+
+ATQT1
+-----
+
+This wing is available in two versions: mutual and self capacitance.
+
+Mutual capacitance:
+- insmod atmel_ptc.ko configuration_file=mailbox_qt1_mutual.bin
+- run atqt1_mc_demo
+
+Self capacitance:
+- insmod atmel_ptc.ko configuration_file=mailbox_qt1_self.bin
+- run atqt1_sc_demo
+
+ATQT2
+-----
+
+- insmod atmel_ptc.ko configuration_file=mailbox_qt2_mutual.bin
+- run atqt2_demo
+
+ATQT6
+-----
+
+- insmod atmel_ptc.ko configuration_file=mailbox_qt6_mutual.bin
+- run atqt6_demo
