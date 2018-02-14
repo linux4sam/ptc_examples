@@ -15,12 +15,12 @@ atqt1_sc.o: atqt1.c atqt.h
 atqt1_mc.o: atqt1.c atqt.h
 	$(CC) $(CFLAGS) -o $@ -c $< -D MUTCAP
 
-atqt2_demo: atqt2.o atqt.h atqt.o
+atqt2_demo: atqt2.o atqt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 atqt2.o: atqt.h
 
-atqt6_demo: atqt6.o atqt.h atqt.o
+atqt6_demo: atqt6.o atqt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 atqt6.o: atqt.h
