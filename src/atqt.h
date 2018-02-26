@@ -24,6 +24,7 @@
 #include <gpiod.h>
 
 struct led_desc {
+	unsigned int led_id;
 	unsigned int pin_id;
 	struct gpiod_line *gpio_line;
 };

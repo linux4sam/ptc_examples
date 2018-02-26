@@ -38,7 +38,7 @@
 
 #ifdef MUTCAP
 #define NUMBER_OF_BUTTONS	2
-#define SLIDER_NB_OF_LEDS	8
+#define SLIDER_NB_OF_LEDS	6
 #define WHEEL_NB_OF_LEDS	3
 
 static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
@@ -51,14 +51,14 @@ static struct led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
 };
 
 static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
-	{ .pin_id = 107 },	/* PD11 */
-	{ .pin_id = 108 },	/* PD12 */
-	{ .pin_id = 41 },	/* PB9 */
-	{ .pin_id = 64 },	/* PC0 */
-	{ .pin_id = 113 },	/* PD17 */
-	{ .pin_id = 114 },	/* PD18 */
-	{ .pin_id = 122 },	/* PD26 */
-	/* unused */
+	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
+	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
+	{ .led_id = 2, .pin_id = 41 },	/* PB9 */
+	{ .led_id = 3, .pin_id = 64 },	/* PC0 */
+	{ .led_id = 4, .pin_id = 113 },	/* PD17 */
+	/* unused */			/* PD18 */
+	{ .led_id = 6, .pin_id = 122 },	/* PD26 */
+	/* unused */			/* PD17 */
 };
 
 static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
@@ -82,14 +82,14 @@ static struct led_desc buttons_leds[1] = {
 };
 
 static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
-	{ .pin_id = 41 },	/* PB9 */
-	{ .pin_id = 64 },	/* PC0 */
-	{ .pin_id = 113 },	/* PD17 */
-	{ .pin_id = 122 },	/* PD26 */
-	{ .pin_id = 99 },	/* PD3 */
-	{ .pin_id = 100 },	/* PD4 */
-	{ .pin_id = 101 },	/* PD5 */
-	{ .pin_id = 102 },	/* PD6 */
+	{ .led_id = 0, .pin_id = 41 },	/* PB9 */
+	{ .led_id = 1, .pin_id = 64 },	/* PC0 */
+	{ .led_id = 2, .pin_id = 113 },	/* PD17 */
+	{ .led_id = 3, .pin_id = 122 },	/* PD26 */
+	{ .led_id = 4, .pin_id = 99 },	/* PD3 */
+	{ .led_id = 5, .pin_id = 100 },	/* PD4 */
+	{ .led_id = 6, .pin_id = 101 },	/* PD5 */
+	{ .led_id = 7, .pin_id = 102 },	/* PD6 */
 };
 
 static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
@@ -195,7 +195,7 @@ static void slider_position_update(struct led_desc *leds, unsigned int nleds,
 				   unsigned int ev_type, unsigned int ev_value,
 				   void *arg)
 {
-	unsigned int i;
+	unsigned int i, display_value;
 	struct gpiod_line *led_gpio_line;
 
 	if (ev_type == EV_KEY) {
@@ -209,19 +209,18 @@ static void slider_position_update(struct led_desc *leds, unsigned int nleds,
 		}
 	} else if (ev_type == EV_ABS) {
 		/*
-		 * Values from 0 to 63, split it into 8 parts. Has to be updated if
-		 * resolution is changed.
+		 * ev_value range is from 0 to 63 (depends on scroller resolution),
+		 * split it into 8 parts for display.
 		 */
-		for (i = 0; i < ev_value / 8 + 1; i++) {
+		display_value = ev_value / 8;
+		for (i = 0; i < nleds; i++) {
 			struct gpiod_line *led_gpio_line = leds[i].gpio_line;
-			if (led_gpio_line)
+
+			if (!led_gpio_line)
+				continue;
+			if (leds[i].led_id <= display_value)
 				gpiod_line_set_value(led_gpio_line, 1);
-		}
-
-		for (; i < nleds; i++) {
-			struct gpiod_line *led_gpio_line = leds[i].gpio_line;
-
-			if (led_gpio_line)
+			else
 				gpiod_line_set_value(led_gpio_line, 0);
 		}
 	}
