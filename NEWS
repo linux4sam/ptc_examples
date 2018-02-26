@@ -8,5 +8,6 @@ Known issues:
 - sensitivity too high for mutual capacitance wings.
 - ATQT1 self capacitance: 'button 1' not working due to pinmuxing
 constraints.
-- ATQT1 mutual capacitance: 'led 7' not working due to pinmuxing
+- ATQT1 mutual capacitance: 'led 5' and 'led 7' not working due to pinmuxing
 constraints.
+- board has to be rebooted when changing the wing.
