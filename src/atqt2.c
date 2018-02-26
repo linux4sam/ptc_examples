@@ -79,9 +79,9 @@ static void led_on(int xpos, int ypos)
 	if (!xpos && !ypos)
 		return;
 
-	/* xpos: 0 to 63, ypos: 0 to 63 */
+	/* xpos: 0 to 63, ypos: 0 to 57 */
 	buf[0] = 1 + xpos / 10;
-	buf[1] = 0b01000000 >> (ypos / 10);
+	buf[1] = 0b01000000 >> (ypos / 9);
 
 	if (write(i2c_fd, buf, 2) != 2) {
 		fprintf(stderr, "Failed to write to the i2c bus\n");
