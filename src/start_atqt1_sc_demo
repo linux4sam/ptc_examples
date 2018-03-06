@@ -1,0 +1,21 @@
+#!/bin/sh
+
+MODULE_NAME=atmel_ptc
+
+if [ $(modprobe -l $MODULE_NAME | wc -l) == 0 ]
+then
+	echo "$MODULE_NAME module not found!"
+	exit 1
+fi
+
+lsmod | grep $MODULE_NAME &> /dev/null
+if [ $? == 0 ]
+then
+	echo "remove $MODULE_NAME driver..."
+	modprobe -r $MODULE_NAME
+fi
+
+echo "load $MODULE_NAME module with mailbox_qt1_self configuration..."
+modprobe $MODULE_NAME configuration_file=mailbox_qt1_self.bin
+echo "start atqt1_sc_demo..."
+atqt1_sc_demo
