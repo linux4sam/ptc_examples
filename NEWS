@@ -2,7 +2,7 @@ v1.0
 ====
 
 First release. Examples for ATQT1 self/mutual cap, ATQT2 and ATQT6 wings
-using the libevdev and gpiod libraries.
+using the libevdev (1.5.x) and gpiod (0.3.2) libraries.
 
 Known issues:
 - sensitivity too high for mutual capacitance wings.

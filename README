@@ -14,22 +14,14 @@ ATQT1
 
 This wing is available in two versions: mutual and self capacitance.
 
-Mutual capacitance:
-- insmod atmel_ptc.ko configuration_file=mailbox_qt1_mutual.bin
-- run atqt1_mc_demo
-
-Self capacitance:
-- insmod atmel_ptc.ko configuration_file=mailbox_qt1_self.bin
-- run atqt1_sc_demo
+Run start_atqt1_mc_demo or start_atqt1_sc_demo scripts.
 
 ATQT2
 -----
 
-- insmod atmel_ptc.ko configuration_file=mailbox_qt2_mutual.bin
-- run atqt2_demo
+Run start_atqt2_demo script.
 
 ATQT6
 -----
 
-- insmod atmel_ptc.ko configuration_file=mailbox_qt6_mutual.bin
-- run atqt6_demo
+Run start_atqt6_demo script.
