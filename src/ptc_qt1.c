@@ -1,5 +1,5 @@
 /*
- * Demo for ATQT1 mutual and self capacitance wings.
+ * Demo for PTC QT1 mutual and self capacitance wings.
  *
  * Copyright 2018 Microchip
  * 		  Ludovic Desroches <ludovic.desroches@microchip.com>
@@ -29,7 +29,7 @@
 #include <libevdev-1.0/libevdev/libevdev.h>
 #include <gpiod.h>
 
-#include "atqt.h"
+#include "ptc_qt.h"
 
 #define BUTTONS_INPUT_FILE	"/dev/input/event1"
 #define SLIDER_INPUT_FILE	"/dev/input/event2"
@@ -180,7 +180,7 @@ static struct buttons *initialize_buttons(void)
 			fprintf(stderr, "can't get gpio line for button %d led\n", i);
 			goto out;
 		}
-		gpiod_line_request_output(led_gpio_line, "atqt example", true, 0);
+		gpiod_line_request_output(led_gpio_line, "ptc qt example", true, 0);
 		buttons_leds[i].gpio_line = led_gpio_line;
 	}
 

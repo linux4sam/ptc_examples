@@ -1,29 +1,29 @@
 LDLIBS=-levdev -lgpiod
-EXEC=atqt1_sc_demo atqt1_mc_demo atqt2_demo atqt6_demo
+EXEC=ptc_qt1_self_demo ptc_qt1_mutual_demo ptc_qt2_mutual_demo ptc_qt6_mutual_demo
 
 all: $(EXEC)
 
-atqt1_mc_demo: atqt1_mc.o atqt.o
+ptc_qt1_mutual_demo: ptc_qt1_mutual.o ptc_qt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-atqt1_sc_demo: atqt1_sc.o atqt.o
+ptc_qt1_self_demo: ptc_qt1_self.o ptc_qt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-atqt1_sc.o: atqt1.c atqt.h
+ptc_qt1_self.o: ptc_qt1.c ptc_qt.h
 	$(CC) $(CFLAGS) -o $@ -c $< -D SELFCAP
 
-atqt1_mc.o: atqt1.c atqt.h
+ptc_qt1_mutual.o: ptc_qt1.c ptc_qt.h
 	$(CC) $(CFLAGS) -o $@ -c $< -D MUTCAP
 
-atqt2_demo: atqt2.o atqt.o
+ptc_qt2_mutual_demo: ptc_qt2.o ptc_qt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-atqt2.o: atqt.h
+ptc_qt2.o: ptc_qt.h
 
-atqt6_demo: atqt6.o atqt.o
+ptc_qt6_mutual_demo: ptc_qt6.o ptc_qt.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-atqt6.o: atqt.h
+ptc_qt6.o: ptc_qt.h
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<

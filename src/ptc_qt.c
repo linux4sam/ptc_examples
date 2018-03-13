@@ -1,5 +1,5 @@
 /*
- * Library for ATQTx demos.
+ * Library for PTC QTx demos.
  *
  * Copyright 2018 Microchip
  * 		  Ludovic Desroches <ludovic.desroches@microchip.com>
@@ -28,7 +28,7 @@
 #include <libevdev-1.0/libevdev/libevdev.h>
 #include <gpiod.h>
 
-#include "atqt.h"
+#include "ptc_qt.h"
 
 int scroller_event_handler(struct scroller *scroller, void *arg)
 {

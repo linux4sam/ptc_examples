@@ -1,5 +1,5 @@
 /*
- * Demo for ATQT6 wing.
+ * Demo for PTC QT6 wing.
  *
  * Copyright 2018 Microchip
  * 		  Ludovic Desroches <ludovic.desroches@microchip.com>
@@ -26,7 +26,7 @@
 
 #include <libevdev-1.0/libevdev/libevdev.h>
 
-#include "atqt.h"
+#include "ptc_qt.h"
 
 #define SLIDER_X_INPUT_FILE	"/dev/input/event1"
 #define SLIDER_Y_INPUT_FILE	"/dev/input/event2"

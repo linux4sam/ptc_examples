@@ -15,7 +15,7 @@ then
 	modprobe -r $MODULE_NAME
 fi
 
-echo "load $MODULE_NAME module with mailbox_qt1_mutual configuration..."
-modprobe $MODULE_NAME configuration_file=mailbox_qt1_mutual.bin
-echo "start atqt1_mc_demo..."
-atqt1_mc_demo
+echo "load $MODULE_NAME module with ptc_cfg_qt6_mutual configuration..."
+modprobe $MODULE_NAME configuration_file=ptc_cfg_qt6_mutual.bin
+echo "start ptc_qt6_mutual_demo..."
+ptc_qt6_mutual_demo
