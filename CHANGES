@@ -1,3 +1,9 @@
+2018-03-18 Ludovic Desroches
+
+	* file renaming for better consistency
+	* firmware and configurations files have to be located
+	in /lib/firmware/microchip
+
 2018-03-06 Ludovic Desroches
 
 	* Add helper scripts to start demos
