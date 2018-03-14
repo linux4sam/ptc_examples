@@ -3,8 +3,8 @@ PTC examples
 
 The PTC examples are composed of binary configurations and demo applications.
 The binary configurations have to be copied from the 'cfg' folder to the
-'/lib/firmware/' folder of your target. The PTC firmware is also provided and
-has to be copied in '/lib/firmware' as well.
+'/lib/firmware/microchip' folder of your target. The PTC firmware is also
+provided and has to be copied in '/lib/firmware/microchip' as well.
 
 Before running the application, you have to probe the atmel_ptc module with
 the appropriate configuration.
@@ -14,14 +14,14 @@ ATQT1
 
 This wing is available in two versions: mutual and self capacitance.
 
-Run start_atqt1_mc_demo or start_atqt1_sc_demo scripts.
+Run start_ptc_qt1_mutual_demo or start_ptc_qt1_self_demo scripts.
 
 ATQT2
 -----
 
-Run start_atqt2_demo script.
+Run start_ptc_qt2_mutual_demo script.
 
 ATQT6
 -----
 
-Run start_atqt6_demo script.
+Run start_ptc_qt6_mutual_demo script.
