@@ -104,6 +104,12 @@ struct scroller *initialize_scroller(const char *input_file,
 		goto out;
 	}
 
+	if (strcmp("atmel_ptc_slider", libevdev_get_name(scroller->evdev))
+	    && strcmp("atmel_ptc_wheel", libevdev_get_name(scroller->evdev))) {
+		fprintf(stderr, "%s is not a scroller input device from the PTC\n", input_file);
+		goto out;
+	}
+
 	for (i = 0; i < nleds; i++) {
 		struct gpiod_line *led_gpio_line;
 		unsigned int pin_id = scroller->leds[i].pin_id;

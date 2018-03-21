@@ -171,6 +171,11 @@ static struct buttons *initialize_buttons(void)
 		goto out;
 	}
 
+	if (strcmp("atmel_ptc_buttons", libevdev_get_name(buttons->evdev))) {
+		fprintf(stderr, "%s is not a buttons input device from the PTC\n", BUTTONS_INPUT_FILE);
+		goto out;
+	}
+
 	for (i = 0; i < NUMBER_OF_BUTTONS; i++) {
 		struct gpiod_line *led_gpio_line;
 		unsigned int pin_id = buttons_leds[i].pin_id;
