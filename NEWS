@@ -1,3 +1,10 @@
+v1.1
+====
+
+Minor fixes for helper scripts and to check we are opening the input device
+we expect.
+
+
 v1.0
 ====
 

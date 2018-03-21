@@ -1,3 +1,10 @@
+2018-03-21 Ludovic Desroches
+
+	* update helper scripts to not rely on list option
+	from modprobe
+	* check that the input device opened is the one
+	expected
+
 2018-03-18 Ludovic Desroches
 
 	* file renaming for better consistency
