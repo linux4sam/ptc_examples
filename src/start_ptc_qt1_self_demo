@@ -2,7 +2,7 @@
 
 MODULE_NAME=atmel_ptc
 
-if [ $(modprobe -l $MODULE_NAME | wc -l) == 0 ]
+if [ $(find /lib/modules/$(uname -r) -name $MODULE_NAME.ko | wc -l) == 0 ]
 then
 	echo "$MODULE_NAME module not found!"
 	exit 1
