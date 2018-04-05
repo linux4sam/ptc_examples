@@ -1,4 +1,3 @@
-export CC=$(CROSS_COMPILE)gcc
 SRC_DIR=src
 
 all:
