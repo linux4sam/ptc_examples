@@ -166,7 +166,10 @@ int main(void)
 			}
 		}
 
-		led_on(pos_x, pos_y);
+		if (pos_x && pos_y)
+			led_on(pos_x, pos_y);
+		else
+			led_all_off();
 	}
 	fprintf(stderr, "event error\n");
 
