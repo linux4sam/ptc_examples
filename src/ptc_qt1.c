@@ -185,7 +185,8 @@ static struct buttons *initialize_buttons(void)
 			fprintf(stderr, "can't get gpio line for button %d led\n", i);
 			goto out;
 		}
-		gpiod_line_request_output(led_gpio_line, "ptc qt example", true, 0);
+		gpiod_line_request_output_flags(led_gpio_line,
+			"ptc qt example", GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW, 0);
 		buttons_leds[i].gpio_line = led_gpio_line;
 	}
 
