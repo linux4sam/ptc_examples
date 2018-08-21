@@ -1,3 +1,7 @@
+2018-08-21 Ludovic Desroches
+	* update some of the libgpiod calls due to API change
+	with version 1.0
+
 2018-03-21 Ludovic Desroches
 
 	* update helper scripts to not rely on list option
