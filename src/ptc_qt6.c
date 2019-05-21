@@ -28,8 +28,8 @@
 
 #include "ptc_qt.h"
 
-#define SLIDER_X_INPUT_FILE	"/dev/input/event1"
-#define SLIDER_Y_INPUT_FILE	"/dev/input/event2"
+#define SLIDER_X_INPUT_FILE	"/dev/input/atmel_ptc0"
+#define SLIDER_Y_INPUT_FILE	"/dev/input/atmel_ptc1"
 #define POLL_NFDS		2
 
 static void slider_position_update(struct led_desc *leds, unsigned int nleds,

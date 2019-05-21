@@ -30,8 +30,8 @@
 
 #include "ptc_qt.h"
 
-#define SLIDER_X_INPUT_FILE	"/dev/input/event1"
-#define SLIDER_Y_INPUT_FILE	"/dev/input/event2"
+#define SLIDER_X_INPUT_FILE	"/dev/input/atmel_ptc0"
+#define SLIDER_Y_INPUT_FILE	"/dev/input/atmel_ptc1"
 #define POLL_NFDS		2
 
 #define IS31FL3728_ADDR			0x60

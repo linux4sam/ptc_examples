@@ -104,8 +104,7 @@ struct scroller *initialize_scroller(const char *input_file,
 		goto out;
 	}
 
-	if (strcmp("atmel_ptc_slider", libevdev_get_name(scroller->evdev))
-	    && strcmp("atmel_ptc_wheel", libevdev_get_name(scroller->evdev))) {
+	if (strncmp("atmel_ptc", libevdev_get_name(scroller->evdev), strlen("atmel_ptc"))) {
 		fprintf(stderr, "%s is not a scroller input device from the PTC\n", input_file);
 		goto out;
 	}

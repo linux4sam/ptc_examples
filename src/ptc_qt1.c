@@ -31,9 +31,9 @@
 
 #include "ptc_qt.h"
 
-#define BUTTONS_INPUT_FILE	"/dev/input/event1"
-#define SLIDER_INPUT_FILE	"/dev/input/event2"
-#define WHEEL_INPUT_FILE	"/dev/input/event3"
+#define BUTTONS_INPUT_FILE	"/dev/input/atmel_ptc0"
+#define SLIDER_INPUT_FILE	"/dev/input/atmel_ptc1"
+#define WHEEL_INPUT_FILE	"/dev/input/atmel_ptc2"
 #define POLL_NFDS		3
 
 #ifdef MUTCAP
@@ -171,7 +171,7 @@ static struct buttons *initialize_buttons(void)
 		goto out;
 	}
 
-	if (strcmp("atmel_ptc_buttons", libevdev_get_name(buttons->evdev))) {
+	if (strncmp("atmel_ptc", libevdev_get_name(buttons->evdev), strlen("atmel_ptc"))) {
 		fprintf(stderr, "%s is not a buttons input device from the PTC\n", BUTTONS_INPUT_FILE);
 		goto out;
 	}
