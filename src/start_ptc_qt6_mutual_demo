@@ -18,4 +18,5 @@ fi
 echo "load $MODULE_NAME module with ptc_cfg_qt6_mutual configuration..."
 modprobe $MODULE_NAME configuration_file=microchip/ptc_cfg_qt6_mutual.bin
 echo "start ptc_qt6_mutual_demo..."
-ptc_qt6_mutual_demo
+#wait for udev to create all the symlinks, then start the demo
+udevadm settle && ptc_qt6_mutual_demo
