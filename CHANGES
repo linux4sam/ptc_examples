@@ -1,3 +1,11 @@
+2019-06-06 Codrin Ciubotariu
+
+	* use /dev/input/atmel_ptcX symlinks created by udev
+	instead of /dev/input/eventX. This avoids cases in which
+	the wrong devices are used instead
+	* update scripts to wait for the completion of udev rules
+	before starting the application
+
 2018-08-21 Ludovic Desroches
 	* update some of the libgpiod calls due to API change
 	with version 1.0
