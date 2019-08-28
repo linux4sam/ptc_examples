@@ -38,7 +38,7 @@
 
 #ifdef MUTCAP
 #define NUMBER_OF_BUTTONS	2
-#define SLIDER_NB_OF_LEDS	6
+#define SLIDER_NB_OF_LEDS	7
 #define WHEEL_NB_OF_LEDS	3
 
 static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
@@ -56,7 +56,7 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 2, .pin_id = 41 },	/* PB9 */
 	{ .led_id = 3, .pin_id = 64 },	/* PC0 */
 	{ .led_id = 4, .pin_id = 113 },	/* PD17 */
-	/* unused */			/* PD18 */
+	{ .led_id = 5, .pin_id = 114 },	/* PD18 */
 	{ .led_id = 6, .pin_id = 122 },	/* PD26 */
 	/* unused */			/* PD17 */
 };
