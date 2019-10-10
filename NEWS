@@ -1,3 +1,7 @@
+V1.3
+
+Added support for SAMA5D27 WLSOM1 EK
+
 v1.1
 ====
 
@@ -12,9 +16,22 @@ First release. Examples for ATQT1 self/mutual cap, ATQT2 and ATQT6 wings
 using the libevdev (1.5.x) and gpiod (0.3.2) libraries.
 
 Known issues:
+
+SAMA5D2 PTC EK
 - sensitivity too high for mutual capacitance wings.
-- ATQT1 self capacitance: 'button 1' not working due to pinmuxing
+- ATQT1 self capacitance:
+  - 'button 1' not working due to pinmuxing
 constraints.
-- ATQT1 mutual capacitance: 'led 5' and 'led 7' not working due to pinmuxing
+- ATQT1 mutual capacitance:
+  - 'led 7' not working due to pinmuxing
 constraints.
+- board has to be rebooted when changing the wing.
+
+SAMA5D27 WLSOM1 EK
+- ATQT1 self capacitance:
+  - Wheel RGB LED (Blue) not working
+  - LED8 button 1 not working
+- ATQT1 mutual capacitance:
+  - slider led 7 is on the same time slider led 4 is on
+  - Wheel RGB LED (Blue) not working
 - board has to be rebooted when changing the wing.
