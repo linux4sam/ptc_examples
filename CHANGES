@@ -1,3 +1,8 @@
+2019-10-10 Codrin Ciubotariu
+
+	* Added support for SAMA5D27 WLSOM1 EK Rev C board
+	* Fixed LED 5 on QT1 mutual capacitance wing
+
 2019-06-06 Codrin Ciubotariu
 
 	* use /dev/input/atmel_ptcX symlinks created by udev
