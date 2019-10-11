@@ -1,3 +1,7 @@
+2019-10-11 Codrin Ciubotariu
+
+	* Fixed number of RBG pins used on SAMA5D27 WLSOM1 EK
+
 2019-10-10 Codrin Ciubotariu
 
 	* Added support for SAMA5D27 WLSOM1 EK Rev C board
