@@ -92,7 +92,6 @@ static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 #ifdef SELFCAP
 #define NUMBER_OF_BUTTONS	1
 #define SLIDER_NB_OF_LEDS	8
-#define WHEEL_NB_OF_LEDS	3
 
 static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
 	0x106,
@@ -103,6 +102,7 @@ static struct led_desc buttons_leds[1] = {
 };
 
 #ifdef SAMA5D27_WLSOM1_EK
+#define WHEEL_NB_OF_LEDS	2
 static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 62 },	/* PB30 */
 	{ .led_id = 1, .pin_id = 33 },	/* PB1 */
@@ -119,6 +119,7 @@ static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 	{ .pin_id = 106 },	/* PD10 */
 };
 #else
+#define WHEEL_NB_OF_LEDS	3
 static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 41 },	/* PB9 */
 	{ .led_id = 1, .pin_id = 64 },	/* PC0 */
