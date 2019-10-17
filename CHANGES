@@ -1,3 +1,7 @@
+2019-10-17 Codrin Ciubotariu
+
+	* Updated pins to QT1 wings LEDS on SAMA5D27 WLSOM1 EK Rev 1
+
 2019-10-11 Codrin Ciubotariu
 
 	* Fixed number of RBG pins used on SAMA5D27 WLSOM1 EK
