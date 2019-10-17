@@ -1,3 +1,8 @@
+V1.3.1
+====
+
+Added changes for SAMA5D27 WLSOM1 EK Rev 1
+
 V1.3
 ====
 
@@ -29,10 +34,7 @@ constraints.
 - board has to be rebooted when changing the wing.
 
 SAMA5D27 WLSOM1 EK
+- sensitivity too high for mutual capacitance wings.
 - ATQT1 self capacitance:
-  - Wheel RGB LED (Blue) not working
-  - LED8 button 1 not working
-- ATQT1 mutual capacitance:
-  - slider led 7 is on the same time slider led 4 is on
-  - Wheel RGB LED (Blue) not working
+  - LED9 button 2 not working
 - board has to be rebooted when changing the wing.
