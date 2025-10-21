@@ -20,9 +20,8 @@
 #ifndef _ATQT_H
 #define _ATQT_H
 
-#include <libevdev-1.0/libevdev/libevdev.h>
-
 struct gpio_led_desc;
+struct libevdev;
 
 struct buttons {
 	int fd;
