@@ -21,36 +21,30 @@
 #define _ATQT_H
 
 #include <libevdev-1.0/libevdev/libevdev.h>
-#include <gpiod.h>
 
-struct led_desc {
-	unsigned int led_id;
-	unsigned int pin_id;
-	struct gpiod_line *gpio_line;
-};
+struct gpio_led_desc;
 
 struct buttons {
 	int fd;
 	struct libevdev *evdev;
 	unsigned int *key_codes;
-	struct led_desc *leds;
+	struct gpio_led_desc *leds;
 };
 
 struct scroller {
 	int fd;
 	struct libevdev *evdev;
-	struct led_desc *leds;
+	struct gpio_led_desc *leds;
 	unsigned int nleds;
-	void (*position_update)(struct led_desc *leds, unsigned int nleds,
+	void (*position_update)(struct gpio_led_desc *leds, unsigned int nleds,
 				unsigned int ev_type, unsigned int ev_value,
 				void *arg);
 };
 
 int scroller_event_handler(struct scroller *scroller, void *arg);
 struct scroller *initialize_scroller(const char *input_file,
-	struct led_desc *leds, unsigned int nleds,
-	struct gpiod_chip *gpiochip,
-	void (*position_update)(struct led_desc *leds, unsigned int nleds,
+	struct gpio_led_desc *leds, unsigned int nleds,
+	void (*position_update)(struct gpio_led_desc *leds, unsigned int nleds,
 				unsigned int ev_type, unsigned int ev_value,
 				void *arg)
 	);

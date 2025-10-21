@@ -27,9 +27,9 @@
 #include <unistd.h>
 
 #include <libevdev-1.0/libevdev/libevdev.h>
-#include <gpiod.h>
 
 #include "ptc_qt.h"
+#include "gpio_helper.h"
 
 #define BUTTONS_INPUT_FILE	"/dev/input/atmel_ptc0"
 #define SLIDER_INPUT_FILE	"/dev/input/atmel_ptc1"
@@ -46,11 +46,11 @@ static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
 };
 
 #ifdef SAMA5D27_WLSOM1_EK
-static struct led_desc buttons_leds[1] = {
+static struct gpio_led_desc buttons_leds[1] = {
 	{ .pin_id = 103},	/* PD7 */
 };
 
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+static struct gpio_led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 62 },	/* PB30 */
 	{ .led_id = 1, .pin_id = 33 },	/* PB1 */
 	{ .led_id = 2, .pin_id = 14 },	/* PA14 */
@@ -61,17 +61,17 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 7, .pin_id = 102 },	/* PD6 */
 };
 
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+static struct gpio_led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 	{ .pin_id = 105 },	/* PD9 */
 	{ .pin_id = 106 },	/* PD10 */
 	{ .pin_id = 71 },	/* PC07 */
 };
 #else
-static struct led_desc buttons_leds[1] = {
+static struct gpio_led_desc buttons_leds[1] = {
 	{ .pin_id = 104},	/* PD8 */
 };
 
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+static struct gpio_led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 41 },	/* PB9 */
 	{ .led_id = 1, .pin_id = 64 },	/* PC0 */
 	{ .led_id = 2, .pin_id = 113 },	/* PD17 */
@@ -82,7 +82,7 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 7, .pin_id = 102 },	/* PD6 */
 };
 
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+static struct gpio_led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 	{ .pin_id = 105 },	/* PD9 */
 	{ .pin_id = 106 },	/* PD10 */
 	{ .pin_id = 57 },	/* PB25 */
@@ -96,7 +96,7 @@ static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
 	0x108, 0x109,
 };
 
-static struct led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
+static struct gpio_led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
 	{ .pin_id = 103 },	/* PD7 */
 	{ .pin_id = 104 },	/* PD8 */
 };
@@ -104,7 +104,7 @@ static struct led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
 #ifdef SAMA5D27_WLSOM1_EK
 #define SLIDER_NB_OF_LEDS	8
 
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+static struct gpio_led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
 	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
 	{ .led_id = 2, .pin_id = 62 },	/* PB30 */
@@ -115,7 +115,7 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 7, .pin_id = 114 },	/* PD18 */
 };
 
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+static struct gpio_led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 	{ .pin_id = 105 },	/* PD9 */
 	{ .pin_id = 106 },	/* PD10 */
 	{ .pin_id = 71 },	/* PC07 */
@@ -123,7 +123,7 @@ static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 #else
 #define SLIDER_NB_OF_LEDS	7
 
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+static struct gpio_led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
 	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
 	{ .led_id = 2, .pin_id = 41 },	/* PB9 */
@@ -134,15 +134,13 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	/* unused */			/* PD17 */
 };
 
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+static struct gpio_led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
 	{ .pin_id = 105 },	/* PD9 */
 	{ .pin_id = 106 },	/* PD10 */
 	{ .pin_id = 57 },	/* PB25 */
 };
 #endif /* SAMA5D27_WLSOM1_EK */
 #endif /* SELFCAP */
-
-struct gpiod_chip *gpiochip;
 
 static int button_event_handler(struct buttons *buttons)
 {
@@ -161,12 +159,9 @@ static int button_event_handler(struct buttons *buttons)
 		} else	if (ret == LIBEVDEV_READ_STATUS_SUCCESS) {
 			for (i = 0; i < NUMBER_OF_BUTTONS; i++) {
 				unsigned int key_code = buttons_keycodes[i];
-				struct gpiod_line *led_gpio_line =
-					buttons_leds[i].gpio_line;
 
 				if (key_code == ev.code)
-					gpiod_line_set_value(led_gpio_line,
-							     ev.value);
+					ev.value ? gpio_led_on(&buttons_leds[i]) : gpio_led_off(&buttons_leds[i]);
 			}
 		}
 	} while (ret != -EAGAIN);
@@ -178,10 +173,8 @@ static void remove_buttons(struct buttons *buttons)
 {
 	int i;
 
-	for (i = 0; i < NUMBER_OF_BUTTONS; i++) {
-		if (buttons_leds[i].gpio_line)
-			gpiod_line_release(buttons_leds[i].gpio_line);
-	}
+	for (i = 0; i < NUMBER_OF_BUTTONS; i++)
+		gpio_led_release(&buttons_leds[i]);
 
 	if (buttons->evdev)
 		libevdev_free(buttons->evdev);
@@ -220,17 +213,10 @@ static struct buttons *initialize_buttons(void)
 	}
 
 	for (i = 0; i < NUMBER_OF_BUTTONS; i++) {
-		struct gpiod_line *led_gpio_line;
-		unsigned int pin_id = buttons_leds[i].pin_id;
-
-		led_gpio_line = gpiod_chip_get_line(gpiochip, pin_id);
-		if (!led_gpio_line) {
+		if (gpio_led_request(&buttons_leds[i])) {
 			fprintf(stderr, "can't get gpio line for button %d led\n", i);
 			goto out;
 		}
-		gpiod_line_request_output_flags(led_gpio_line,
-			"ptc qt example", GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW, 0);
-		buttons_leds[i].gpio_line = led_gpio_line;
 	}
 
 	return buttons;
@@ -240,21 +226,16 @@ out:
 	return NULL;
 }
 
-static void slider_position_update(struct led_desc *leds, unsigned int nleds,
+static void slider_position_update(struct gpio_led_desc *leds, unsigned int nleds,
 				   unsigned int ev_type, unsigned int ev_value,
 				   void *arg)
 {
 	unsigned int i, display_value;
-	struct gpiod_line *led_gpio_line;
 
 	if (ev_type == EV_KEY) {
 		if (ev_value == 0) {
-			for (i = 0; i < nleds; i++) {
-				led_gpio_line = leds[i].gpio_line;
-
-				if (led_gpio_line)
-					gpiod_line_set_value(led_gpio_line, 0);
-			}
+			for (i = 0; i < nleds; i++)
+				gpio_led_off(&leds[i]);
 		}
 	} else if (ev_type == EV_ABS) {
 		/*
@@ -263,33 +244,24 @@ static void slider_position_update(struct led_desc *leds, unsigned int nleds,
 		 */
 		display_value = ev_value / 8;
 		for (i = 0; i < nleds; i++) {
-			struct gpiod_line *led_gpio_line = leds[i].gpio_line;
-
-			if (!led_gpio_line)
-				continue;
 			if (leds[i].led_id <= display_value)
-				gpiod_line_set_value(led_gpio_line, 1);
+				gpio_led_on(&leds[i]);
 			else
-				gpiod_line_set_value(led_gpio_line, 0);
+				gpio_led_off(&leds[i]);
 		}
 	}
 }
 
-static void wheel_position_update(struct led_desc *leds, unsigned int nleds,
+static void wheel_position_update(struct gpio_led_desc *leds, unsigned int nleds,
 				  unsigned int ev_type, unsigned int ev_value,
 				  void *arg)
 {
 	unsigned int i;
-	struct gpiod_line *led_gpio_line;
 
 	if (ev_type == EV_KEY) {
 		if (ev_value == 0) {
-			for (i = 0; i < nleds; i++) {
-				led_gpio_line = leds[i].gpio_line;
-
-				if (led_gpio_line)
-					gpiod_line_set_value(led_gpio_line, 0);
-			}
+			for (i = 0; i < nleds; i++)
+				gpio_led_off(&leds[i]);
 		}
 	} else if (ev_type == EV_ABS) {
 		/*
@@ -297,13 +269,8 @@ static void wheel_position_update(struct led_desc *leds, unsigned int nleds,
 		 * update it if resolution is different.
 		 */
 		ev_value = ev_value / 10 + 1;
-		for (i = 0; i < nleds; i++) {
-			led_gpio_line = leds[i].gpio_line;
-
-			if (led_gpio_line)
-				gpiod_line_set_value(led_gpio_line,
-					     ((ev_value >> i) & 0x1) ? 1 : 0);
-		}
+		for (i = 0; i < nleds; i++)
+			((ev_value >> i) & 0x1) ? gpio_led_on(&leds[i]) : gpio_led_off(&leds[i]);
 	}
 }
 
@@ -314,22 +281,21 @@ int main(void)
 	struct scroller *slider, *wheel;
 	struct pollfd fds[POLL_NFDS];
 
-	gpiochip = gpiod_chip_open("/dev/gpiochip0");
-	if (!gpiochip)
-		fprintf(stderr, "gpiod_chip_open failed\n");
+	if (gpio_init())
+		return EXIT_FAILURE;
 
 	buttons = initialize_buttons();
 	if (!buttons)
-		return EXIT_FAILURE;
+		goto buttons_fail;
 
 	slider = initialize_scroller(SLIDER_INPUT_FILE, slider_leds,
-				     SLIDER_NB_OF_LEDS, gpiochip,
+				     SLIDER_NB_OF_LEDS,
 				     slider_position_update);
 	if (!slider)
 		goto slider_fail;
 
 	wheel = initialize_scroller(WHEEL_INPUT_FILE, wheel_leds,
-				    WHEEL_NB_OF_LEDS, gpiochip,
+				    WHEEL_NB_OF_LEDS,
 				    wheel_position_update);
 	if (!wheel)
 		goto wheel_fail;
@@ -384,7 +350,8 @@ wheel_fail:
 	remove_scroller(slider);
 slider_fail:
 	remove_buttons(buttons);
-	gpiod_chip_close(gpiochip);
+buttons_fail:
+	gpio_fini();
 
 	return EXIT_FAILURE;
 }

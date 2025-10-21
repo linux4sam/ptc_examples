@@ -32,7 +32,7 @@
 #define SLIDER_Y_INPUT_FILE	"/dev/input/atmel_ptc1"
 #define POLL_NFDS		2
 
-static void slider_position_update(struct led_desc *leds, unsigned int nleds,
+static void slider_position_update(struct gpio_led_desc *leds, unsigned int nleds,
 				    unsigned int ev_type, unsigned int ev_value,
 				    void *arg)
 {
@@ -52,12 +52,12 @@ int main(void)
 	int pos_x = 0, pos_y = 0, ret, i;
 	struct pollfd fds[POLL_NFDS];
 
-	slider_x = initialize_scroller(SLIDER_X_INPUT_FILE, NULL, 0, NULL,
+	slider_x = initialize_scroller(SLIDER_X_INPUT_FILE, NULL, 0,
 				       slider_position_update);
 	if (!slider_x)
 		goto out;
 
-	slider_y = initialize_scroller(SLIDER_Y_INPUT_FILE, NULL, 0, NULL,
+	slider_y = initialize_scroller(SLIDER_Y_INPUT_FILE, NULL, 0,
 				       slider_position_update);
 	if (!slider_y)
 		goto slider_y_fail;

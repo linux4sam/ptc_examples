@@ -1,6 +1,8 @@
-add_library(ptc_qt OBJECT ptc_qt.c)
+add_library(gpio_helper OBJECT gpio_helper.c)
+add_library(ptc_qt OBJECT ptc_qt.c gpio_helper)
 
 add_executable(ptc_qt1_self_demo
+    gpio_helper
     ptc_qt
     ptc_qt1.c
 )
@@ -8,17 +10,20 @@ target_compile_definitions(ptc_qt1_self_demo PRIVATE SELFCAP)
 target_compile_definitions(ptc_qt1_self_demo PRIVATE SAMA5D27_WLSOM1_EK=${SAMA5D27_WLSOM1_EK})
 
 add_executable(ptc_qt1_mutual_demo
+    gpio_helper
     ptc_qt
     ptc_qt1.c
 )
 target_compile_definitions(ptc_qt1_mutual_demo PRIVATE SAMA5D27_WLSOM1_EK=${SAMA5D27_WLSOM1_EK})
 
 add_executable(ptc_qt2_mutual_demo
+    gpio_helper
     ptc_qt
     ptc_qt2.c
 )
 
 add_executable(ptc_qt6_mutual_demo
+    gpio_helper
     ptc_qt
     ptc_qt6.c
 )

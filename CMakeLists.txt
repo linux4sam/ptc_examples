@@ -14,7 +14,7 @@ set(CMAKE_VERBOSE_MAKEFILE True)
 
 find_package(PkgConfig REQUIRED)
 
-pkg_check_modules(LIBGPIOD REQUIRED libgpiod<2.0.0)
+pkg_check_modules(LIBGPIOD REQUIRED libgpiod>=2.0.0)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)
 
 add_subdirectory(src)

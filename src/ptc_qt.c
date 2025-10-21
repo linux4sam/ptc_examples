@@ -26,9 +26,9 @@
 #include <unistd.h>
 
 #include <libevdev-1.0/libevdev/libevdev.h>
-#include <gpiod.h>
 
 #include "ptc_qt.h"
+#include "gpio_helper.h"
 
 int scroller_event_handler(struct scroller *scroller, void *arg)
 {
@@ -57,10 +57,8 @@ void remove_scroller(struct scroller *scroller)
 {
 	unsigned int i;
 
-	for (i = 0; i < scroller->nleds; i++) {
-		if (scroller->leds[i].gpio_line)
-			gpiod_line_release(scroller->leds[i].gpio_line);
-	}
+	for (i = 0; i < scroller->nleds; i++)
+			gpio_led_release(&scroller->leds[i]);
 
 	if (scroller->evdev)
 		libevdev_free(scroller->evdev);
@@ -72,9 +70,8 @@ void remove_scroller(struct scroller *scroller)
 }
 
 struct scroller *initialize_scroller(const char *input_file,
-	struct led_desc *leds, unsigned int nleds,
-	struct gpiod_chip *gpiochip,
-	void (*position_update)(struct led_desc *leds,
+	struct gpio_led_desc *leds, unsigned int nleds,
+	void (*position_update)(struct gpio_led_desc *leds,
 				unsigned int nleds,
 				unsigned int ev_type,
 				unsigned int ev_value,
@@ -110,18 +107,11 @@ struct scroller *initialize_scroller(const char *input_file,
 	}
 
 	for (i = 0; i < nleds; i++) {
-		struct gpiod_line *led_gpio_line;
-		unsigned int pin_id = scroller->leds[i].pin_id;
-
-		led_gpio_line = gpiod_chip_get_line(gpiochip, pin_id);
-		if (!led_gpio_line) {
+		if (gpio_led_request(&scroller->leds[i])) {
 			fprintf(stderr,
 				"can't get gpio line for button %d led\n", i);
 			goto out;
 		}
-		gpiod_line_request_output_flags(led_gpio_line,
-			"atqt example", GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW, 0);
-		scroller->leds[i].gpio_line = led_gpio_line;
 	}
 
 	return scroller;

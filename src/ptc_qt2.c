@@ -91,7 +91,7 @@ static void led_on(int xpos, int ypos)
 	led_update();
 }
 
-static void slider_position_update(struct led_desc *leds, unsigned int nleds,
+static void slider_position_update(struct gpio_led_desc *leds, unsigned int nleds,
 				    unsigned int ev_type, unsigned int ev_value,
 				    void *arg)
 {
@@ -121,12 +121,12 @@ int main(void)
 		goto out;
 	}
 
-	slider_x = initialize_scroller(SLIDER_X_INPUT_FILE, NULL, 0, NULL,
+	slider_x = initialize_scroller(SLIDER_X_INPUT_FILE, NULL, 0,
 				       slider_position_update);
 	if (!slider_x)
 		goto out;
 
-	slider_y = initialize_scroller(SLIDER_Y_INPUT_FILE, NULL, 0, NULL,
+	slider_y = initialize_scroller(SLIDER_Y_INPUT_FILE, NULL, 0,
 				       slider_position_update);
 	if (!slider_y)
 		goto slider_y_fail;
