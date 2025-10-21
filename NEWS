@@ -1,3 +1,8 @@
+v1.4.0
+====
+
+Move to CMake, update for libgpiod-2.x.
+
 V1.3.1
 ====
 

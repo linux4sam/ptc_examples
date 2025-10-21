@@ -1,3 +1,9 @@
+2025-10-21 Ludovic Desroches
+
+    * Replace Makefile with CMake
+    * Update libgpiod related code for version 2.x
+    * Encapsulate gpio related code
+
 2019-10-17 Codrin Ciubotariu
 
 	* Updated pins to QT1 wings LEDS on SAMA5D27 WLSOM1 EK Rev 1

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.23)
 
 project(ptc_examples
-    VERSION 1.3.1
+    VERSION 1.4.0
     DESCRIPTION "PTC demos"
     LANGUAGES C
 )
-#set(PROJECT_VERSION_RC 1)
+set(PROJECT_VERSION_RC 1)
 if(DEFINED PROJECT_VERSION_RC)
     string(APPEND PROJECT_VERSION "-rc${PROJECT_VERSION_RC}")
 endif()
