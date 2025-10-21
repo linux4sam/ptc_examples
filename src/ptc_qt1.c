@@ -36,60 +36,6 @@
 #define WHEEL_INPUT_FILE	"/dev/input/atmel_ptc2"
 #define POLL_NFDS		3
 
-#ifdef MUTCAP
-#define NUMBER_OF_BUTTONS	2
-#define WHEEL_NB_OF_LEDS	3
-
-static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
-	0x108, 0x109,
-};
-
-static struct led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
-	{ .pin_id = 103 },	/* PD7 */
-	{ .pin_id = 104 },	/* PD8 */
-};
-
-#ifdef SAMA5D27_WLSOM1_EK
-#define SLIDER_NB_OF_LEDS	8
-
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
-	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
-	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
-	{ .led_id = 2, .pin_id = 62 },	/* PB30 */
-	{ .led_id = 3, .pin_id = 33 },	/* PB1 */
-	{ .led_id = 4, .pin_id = 14 },	/* PA14 */
-	{ .led_id = 5, .pin_id = 113 },	/* PD17 */
-	{ .led_id = 6, .pin_id = 32 },	/* PB0 */
-	{ .led_id = 7, .pin_id = 114 },	/* PD18 */
-};
-
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
-	{ .pin_id = 105 },	/* PD9 */
-	{ .pin_id = 106 },	/* PD10 */
-	{ .pin_id = 71 },	/* PC07 */
-};
-#else
-#define SLIDER_NB_OF_LEDS	7
-
-static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
-	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
-	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
-	{ .led_id = 2, .pin_id = 41 },	/* PB9 */
-	{ .led_id = 3, .pin_id = 64 },	/* PC0 */
-	{ .led_id = 4, .pin_id = 113 },	/* PD17 */
-	{ .led_id = 5, .pin_id = 114 },	/* PD18 */
-	{ .led_id = 6, .pin_id = 122 },	/* PD26 */
-	/* unused */			/* PD17 */
-};
-
-static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
-	{ .pin_id = 105 },	/* PD9 */
-	{ .pin_id = 106 },	/* PD10 */
-	{ .pin_id = 57 },	/* PB25 */
-};
-#endif /* SAMA5D27_WLSOM1_EK */
-#endif /* MUTCAP */
-
 #ifdef SELFCAP
 #define NUMBER_OF_BUTTONS	1
 #define SLIDER_NB_OF_LEDS	8
@@ -134,6 +80,58 @@ static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
 	{ .led_id = 5, .pin_id = 100 },	/* PD4 */
 	{ .led_id = 6, .pin_id = 101 },	/* PD5 */
 	{ .led_id = 7, .pin_id = 102 },	/* PD6 */
+};
+
+static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+	{ .pin_id = 105 },	/* PD9 */
+	{ .pin_id = 106 },	/* PD10 */
+	{ .pin_id = 57 },	/* PB25 */
+};
+#endif /* SAMA5D27_WLSOM1_EK */
+#else
+#define NUMBER_OF_BUTTONS	2
+#define WHEEL_NB_OF_LEDS	3
+
+static unsigned int buttons_keycodes[NUMBER_OF_BUTTONS] = {
+	0x108, 0x109,
+};
+
+static struct led_desc buttons_leds[NUMBER_OF_BUTTONS] = {
+	{ .pin_id = 103 },	/* PD7 */
+	{ .pin_id = 104 },	/* PD8 */
+};
+
+#ifdef SAMA5D27_WLSOM1_EK
+#define SLIDER_NB_OF_LEDS	8
+
+static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
+	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
+	{ .led_id = 2, .pin_id = 62 },	/* PB30 */
+	{ .led_id = 3, .pin_id = 33 },	/* PB1 */
+	{ .led_id = 4, .pin_id = 14 },	/* PA14 */
+	{ .led_id = 5, .pin_id = 113 },	/* PD17 */
+	{ .led_id = 6, .pin_id = 32 },	/* PB0 */
+	{ .led_id = 7, .pin_id = 114 },	/* PD18 */
+};
+
+static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {
+	{ .pin_id = 105 },	/* PD9 */
+	{ .pin_id = 106 },	/* PD10 */
+	{ .pin_id = 71 },	/* PC07 */
+};
+#else
+#define SLIDER_NB_OF_LEDS	7
+
+static struct led_desc slider_leds[SLIDER_NB_OF_LEDS] = {
+	{ .led_id = 0, .pin_id = 107 },	/* PD11 */
+	{ .led_id = 1, .pin_id = 108 },	/* PD12 */
+	{ .led_id = 2, .pin_id = 41 },	/* PB9 */
+	{ .led_id = 3, .pin_id = 64 },	/* PC0 */
+	{ .led_id = 4, .pin_id = 113 },	/* PD17 */
+	{ .led_id = 5, .pin_id = 114 },	/* PD18 */
+	{ .led_id = 6, .pin_id = 122 },	/* PD26 */
+	/* unused */			/* PD17 */
 };
 
 static struct led_desc wheel_leds[WHEEL_NB_OF_LEDS] = {

@@ -11,7 +11,6 @@ add_executable(ptc_qt1_mutual_demo
     ptc_qt
     ptc_qt1.c
 )
-target_compile_definitions(ptc_qt1_mutual_demo PRIVATE MUTCAP)
 target_compile_definitions(ptc_qt1_mutual_demo PRIVATE SAMA5D27_WLSOM1_EK=${SAMA5D27_WLSOM1_EK})
 
 add_executable(ptc_qt2_mutual_demo
